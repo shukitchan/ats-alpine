@@ -11,8 +11,8 @@ RUN apk add --no-cache --virtual .ats-build-deps \
   brotli-dev jansson-dev luajit-dev readline-dev \
   geoip-dev
 
-RUN curl -L http://mirror.cogentco.com/pub/apache/trafficserver/trafficserver-8.0.6.tar.bz2 | bzip2 -dc | tar xf - \
-  && cd trafficserver-8.0.6/ \
+RUN curl -L http://mirror.cogentco.com/pub/apache/trafficserver/trafficserver-8.0.8.tar.bz2 | bzip2 -dc | tar xf - \
+  && cd trafficserver-8.0.8/ \
   && autoreconf -if \
   && ./configure --enable-debug=yes \
   && make \
