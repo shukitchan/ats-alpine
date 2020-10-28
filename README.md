@@ -1,4 +1,4 @@
-Docker Image for Apache Traffic Server (ATS) 8.1.x on alpine 3.12
+Docker Image for Apache Traffic Server (ATS) 8.1.x on alpine 3.12.1
 ====
  - http://trafficserver.apache.org/
 
