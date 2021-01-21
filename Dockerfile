@@ -1,4 +1,4 @@
-FROM alpine:3.12.3 as builder
+FROM alpine:3.13.0 as builder
 
 RUN apk add --no-cache --virtual .tools \
   bzip2 curl git automake libtool autoconf make \
@@ -11,8 +11,8 @@ RUN apk add --no-cache --virtual .ats-build-deps \
   brotli-dev jansson-dev luajit-dev readline-dev \
   geoip-dev
 
-RUN curl -L http://mirror.cogentco.com/pub/apache/trafficserver/trafficserver-8.1.1.tar.bz2 | bzip2 -dc | tar xf - \
-  && cd trafficserver-8.1.1/ \
+RUN curl -L http://mirror.cogentco.com/pub/apache/trafficserver/trafficserver-9.0.0.tar.bz2 | bzip2 -dc | tar xf - \
+  && cd trafficserver-9.0.0/ \
   && autoreconf -if \
   && ./configure --enable-debug=yes \
   && make \
