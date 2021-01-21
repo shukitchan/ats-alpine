@@ -23,7 +23,7 @@ COPY ["./entry.alpine.sh", "/usr/local/bin/entry.sh"]
 WORKDIR /usr/local/bin/
 RUN chmod 755 entry.sh
 
-FROM alpine:3.12.1
+FROM alpine:3.12.3
 
 COPY --from=builder /usr/local /usr/local
 
