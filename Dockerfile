@@ -11,12 +11,18 @@ RUN apk add --no-cache --virtual .ats-build-deps \
   brotli-dev jansson-dev luajit-dev readline-dev \
   geoip-dev
 
+RUN apk add --no-cache --virtual .ats-extra-build-deps --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing hwloc-dev
+
 RUN curl -L http://mirror.cogentco.com/pub/apache/trafficserver/trafficserver-8.1.1.tar.bz2 | bzip2 -dc | tar xf - \
   && cd trafficserver-8.1.1/ \
   && autoreconf -if \
   && ./configure --enable-debug=yes \
   && make \
   && make install
+
+# enable traffic.out for alpine/gentoo
+RUN sed -i "s/TM_DAEMON_ARGS=\"\"/TM_DAEMON_ARGS=\" --bind_stdout \/usr\/local\/var\/log\/trafficserver\/traffic.out --bind_stderr \/usr\/local\/var\/log\/trafficserver\/traffic.out \"/" /usr/local/bin/trafficserver
+RUN sed -i "s/TS_DAEMON_ARGS=\"\"/TS_DAEMON_ARGS=\" --bind_stdout \/usr\/local\/var\/log\/trafficserver\/traffic.out --bind_stderr \/usr\/local\/var\/log\/trafficserver\/traffic.out \"/" /usr/local/bin/trafficserver
 
 # entry.sh
 COPY ["./entry.alpine.sh", "/usr/local/bin/entry.sh"]
@@ -32,5 +38,7 @@ RUN apk add -U \
   bash build-base curl ca-certificates pcre \
   zlib openssl brotli jansson luajit libunwind \
   readline geoip libexecinfo tcl openrc
+
+RUN apk add -U --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing hwloc
 
 ENTRYPOINT ["/usr/local/bin/entry.sh"] 
