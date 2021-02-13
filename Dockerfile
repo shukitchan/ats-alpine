@@ -11,7 +11,7 @@ RUN apk add --no-cache --virtual .ats-build-deps \
   brotli-dev jansson-dev luajit-dev readline-dev \
   geoip-dev
 
-RUN apk add --no-cache --virtual .ats-extra-build-deps --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing hwloc-dev
+RUN apk add --no-cache --virtual .ats-extra-build-deps --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc-dev
 
 RUN curl -L https://downloads.apache.org/trafficserver/trafficserver-9.0.0.tar.bz2 | bzip2 -dc | tar xf - \
   && cd trafficserver-9.0.0/ \
@@ -39,6 +39,6 @@ RUN apk add -U \
   zlib openssl brotli jansson luajit libunwind \
   readline geoip libexecinfo tcl openrc
 
-RUN apk add -U --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing hwloc
+RUN apk add -U --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc
 
 ENTRYPOINT ["/usr/local/bin/entry.sh"] 
