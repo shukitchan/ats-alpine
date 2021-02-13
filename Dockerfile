@@ -13,7 +13,7 @@ RUN apk add --no-cache --virtual .ats-build-deps \
 
 RUN apk add --no-cache --virtual .ats-extra-build-deps --repository https://dl-cdn.alpinelinux.org/alpine/edge/testing hwloc-dev
 
-RUN curl -L http://mirror.cogentco.com/pub/apache/trafficserver/trafficserver-9.0.0.tar.bz2 | bzip2 -dc | tar xf - \
+RUN curl -L https://downloads.apache.org/trafficserver/trafficserver-9.0.0.tar.bz2 | bzip2 -dc | tar xf - \
   && cd trafficserver-9.0.0/ \
   && autoreconf -if \
   && ./configure --enable-debug=yes \
