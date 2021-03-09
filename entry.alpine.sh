@@ -3,6 +3,6 @@
 set +x
 
 # start ats
-DISTRIB_ID=gentoo /usr/local/bin/trafficserver start
+DISTRIB_ID=gentoo /opt/ats/bin/trafficserver start
 
 /bin/bash
