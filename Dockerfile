@@ -38,12 +38,12 @@ RUN chmod 755 entry.sh
 FROM alpine:3.12.4
 
 # essential library
-RUN apk add -U \
+RUN apk add --no-cache -U \
   bash build-base curl ca-certificates pcre \
   zlib openssl brotli jansson luajit libunwind \
   readline geoip libexecinfo tcl openrc
 
-RUN apk add -U --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc
+RUN apk add --no-cache -U --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc
 
 # create ats user/group
 RUN addgroup -Sg 101 ats
