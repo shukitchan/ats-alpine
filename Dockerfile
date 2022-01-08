@@ -1,4 +1,4 @@
-FROM alpine:3.12.9 as builder
+FROM alpine:3.13.7 as builder
 
 RUN apk add --no-cache --virtual .tools \
   bzip2 curl git automake libtool autoconf make \
@@ -35,7 +35,7 @@ COPY ["./entry.alpine.sh", "/opt/ats/bin/entry.sh"]
 WORKDIR /opt/ats/bin/
 RUN chmod 755 entry.sh
 
-FROM alpine:3.12.9
+FROM alpine:3.13.7
 
 # essential library
 RUN apk add --no-cache -U \
