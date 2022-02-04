@@ -6,5 +6,5 @@ Instructions to Manually Build the Image
 ====
  - git clone https://github.com/shukitchan/ats-alpine.git
  - cd ats-alpine
- - docker build -f Dockerfile -t ats_alpine .
- - docker run -it ats_alpine
+ - docker build -f Dockerfile -t ats-alpine .
+ - docker run -it ats-alpine
