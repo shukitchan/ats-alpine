@@ -32,7 +32,7 @@ jobs:
           context: .
           push: true
           target: builder
-          tags: shukitchan/ats-alpine-dev:latest
+          tags: shukitchan/ats-alpine-devel:latest
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
