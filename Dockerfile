@@ -35,6 +35,8 @@ COPY ["./entry.alpine.sh", "/opt/ats/bin/entry.sh"]
 WORKDIR /opt/ats/bin/
 RUN chmod 755 entry.sh
 
+ENTRYPOINT ["/opt/ats/bin/entry.sh"]
+
 FROM alpine:3.14.6
 
 # essential library
