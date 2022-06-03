@@ -16,6 +16,16 @@ Instructions to Manually Build the Image
  - `docker build -f Dockerfile -t ats-alpine .`
  - `docker run -it ats-alpine`
 
+Instructions to use the Image for development
+====
+ - `docker pull ghcr.io/shukitchan/ats-alpine-devel:latest`
+ - `docker run -it ghcr.io/shukitchan/ats-alpine-devel`
+
+Instructions to use the Image
+====
+ - `docker pull ghcr.io/shukitchan/ats-alpine:latest`
+ - `docker run -it ghcr.io/shukitchan/ats-alpine`
+
 Stop/Start/Restart ATS
 ====
  - To stop, `DISTRIB_ID=gentoo /opt/ats/bin/trafficserver stop`
