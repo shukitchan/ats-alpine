@@ -3,11 +3,9 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Trivy Scan
+name: Periodic Trivy Scan
 
 on:
-  push:
-    branches: [ "master" ]
   schedule:
     - cron: '30 1 * * 2'
 
