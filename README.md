@@ -2,7 +2,7 @@ Docker Image for Apache Traffic Server (ATS) 9.1.2 on alpine 3.14.6
 ====
  - http://trafficserver.apache.org/
 
-Instructions to Manually Build the Image for development
+Instructions to Manually Build the Dev Image
 ====
  - `git clone https://github.com/shukitchan/ats-alpine.git`
  - `cd ats-alpine`
@@ -16,7 +16,7 @@ Instructions to Manually Build the Image
  - `docker build -f Dockerfile -t ats-alpine .`
  - `docker run -it ats-alpine`
 
-Instructions to use the Image for development
+Instructions to use the Dev Image
 ====
  - `docker pull ghcr.io/shukitchan/ats-alpine-devel:latest`
  - `docker run -it ghcr.io/shukitchan/ats-alpine-devel`
