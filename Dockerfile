@@ -2,7 +2,7 @@ FROM alpine:3.14.6 as builder
 
 RUN apk add --no-cache --virtual .tools \
   bzip2 curl git automake libtool autoconf make \
-  sed file perl openrc openssl
+  sed file perl openrc openssl libssl1.1 libcrypto1.1
 
 # ATS
 RUN apk add --no-cache --virtual .ats-build-deps \
@@ -43,7 +43,7 @@ FROM alpine:3.14.6
 RUN apk add --no-cache -U \
   bash build-base curl ca-certificates pcre \
   zlib openssl brotli jansson luajit libunwind \
-  readline geoip libexecinfo tcl openrc
+  readline geoip libexecinfo tcl openrc libssl1.1 libcrypto1.1
 
 RUN apk add --no-cache -U --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc
 
