@@ -1,12 +1,12 @@
-FROM alpine:3.14.6 as builder
+FROM alpine:3.14.7 as builder
 
 RUN apk add --no-cache --virtual .tools \
   bzip2 curl git automake libtool autoconf make \
-  sed file perl openrc openssl=1.1.1q-r0 libssl1.1=1.1.1q-r0 libcrypto1.1=1.1.1q-r0
+  sed file perl openrc openssl
 
 # ATS
 RUN apk add --no-cache --virtual .ats-build-deps \
-  build-base openssl-dev=1.1.1q-r0 tcl-dev pcre-dev zlib-dev \
+  build-base openssl-dev tcl-dev pcre-dev zlib-dev \
   libexecinfo-dev linux-headers libunwind-dev \
   brotli-dev jansson-dev luajit-dev readline-dev \
   geoip-dev
@@ -37,13 +37,13 @@ RUN chmod 755 entry.sh
 
 ENTRYPOINT ["/opt/ats/bin/entry.sh"]
 
-FROM alpine:3.14.6
+FROM alpine:3.14.7
 
 # essential library
 RUN apk add --no-cache -U \
   bash build-base curl ca-certificates pcre \
-  zlib openssl=1.1.1q-r0 brotli jansson luajit libunwind \
-  readline geoip libexecinfo tcl openrc libssl1.1=1.1.1q-r0 libcrypto1.1=1.1.1q-r0
+  zlib openssl brotli jansson luajit libunwind \
+  readline geoip libexecinfo tcl openrc
 
 RUN apk add --no-cache -U --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc
 
