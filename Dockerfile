@@ -6,7 +6,7 @@ RUN apk add --no-cache --virtual .tools \
 
 # ATS
 RUN apk add --no-cache --virtual .ats-build-deps \
-  build-base openssl-dev tcl-dev pcre-dev zlib-dev \
+  build-base openssl-dev tcl-dev pcre-dev zlib-dev=1.2.12-r3 \
   libexecinfo-dev linux-headers libunwind-dev \
   brotli-dev jansson-dev luajit-dev readline-dev \
   geoip-dev
@@ -42,7 +42,7 @@ FROM alpine:3.14.7
 # essential library
 RUN apk add --no-cache -U \
   bash build-base curl ca-certificates pcre \
-  zlib openssl brotli jansson luajit libunwind \
+  zlib=1.2.12-r3 openssl brotli jansson luajit libunwind \
   readline geoip libexecinfo tcl openrc
 
 RUN apk add --no-cache -U --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc
