@@ -9,7 +9,7 @@ RUN apk add --no-cache --virtual .ats-build-deps \
   build-base openssl-dev tcl-dev pcre-dev zlib-dev \
   libexecinfo-dev linux-headers libunwind-dev \
   brotli-dev jansson-dev luajit-dev readline-dev \
-  geoip-dev libxml2-dev=2.9.14-r1
+  geoip-dev libxml2-dev=2.9.14-r2
 
 RUN apk add --no-cache --virtual .ats-extra-build-deps --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc-dev
 
@@ -43,7 +43,7 @@ FROM alpine:3.14.8
 RUN apk add --no-cache -U \
   bash build-base curl=7.79.1-r3 ca-certificates pcre \
   zlib openssl brotli jansson luajit libunwind \
-  readline geoip libexecinfo tcl openrc libxml2=2.9.14-r1
+  readline geoip libexecinfo tcl openrc libxml2=2.9.14-r2
 
 RUN apk add --no-cache -U --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc
 
