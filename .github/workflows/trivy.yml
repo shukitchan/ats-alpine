@@ -20,6 +20,9 @@ jobs:
     name: Trivy Scan
     runs-on: "ubuntu-22.04"
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
