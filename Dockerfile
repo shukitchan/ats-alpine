@@ -1,7 +1,7 @@
-FROM alpine:3.14.8 as builder
+FROM alpine:3.16.3 as builder
 
 RUN apk add --no-cache --virtual .tools \
-  bzip2 curl=7.79.1-r4 git automake libtool autoconf make \
+  bzip2 curl git automake libtool autoconf make \
   sed file perl openrc openssl
 
 # ATS
@@ -9,7 +9,7 @@ RUN apk add --no-cache --virtual .ats-build-deps \
   build-base openssl-dev tcl-dev pcre-dev zlib-dev \
   libexecinfo-dev linux-headers libunwind-dev \
   brotli-dev jansson-dev luajit-dev readline-dev \
-  geoip-dev libxml2-dev=2.9.14-r2
+  geoip-dev libxml2-dev
 
 RUN apk add --no-cache --virtual .ats-extra-build-deps --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc-dev
 
@@ -19,8 +19,11 @@ RUN addgroup -Sg 1000 ats
 RUN adduser -S -D -H -u 1000 -h /tmp -s /sbin/nologin -G ats -g ats ats
 
 # download and build ATS
+# patch a file due to pthread in musl
 RUN curl -L https://downloads.apache.org/trafficserver/trafficserver-9.2.0.tar.bz2 | bzip2 -dc | tar xf - \
   && cd trafficserver-9.2.0/ \
+  && sed -i "s/PTHREAD_RWLOCK_WRITER_NONRECURSIVE_INITIALIZER_NP/PTHREAD_RWLOCK_INITIALIZER/" include/tscore/ink_rwlock.h \
+  && sed -i "s/PTHREAD_RWLOCK_WRITER_NONRECURSIVE_INITIALIZER_NP/PTHREAD_RWLOCK_INITIALIZER/" include/tscpp/util/TsSharedMutex.h \
   && autoreconf -if \
   && ./configure --enable-debug=yes --prefix=/opt/ats --with-user=ats \
   && make \
@@ -37,13 +40,13 @@ RUN chmod 755 entry.sh
 
 ENTRYPOINT ["/opt/ats/bin/entry.sh"]
 
-FROM alpine:3.14.8
+FROM alpine:3.16.3
 
 # essential library
 RUN apk add --no-cache -U \
-  bash build-base curl=7.79.1-r4 ca-certificates pcre \
+  bash build-base curl ca-certificates pcre \
   zlib openssl brotli jansson luajit libunwind \
-  readline geoip libexecinfo tcl openrc libxml2=2.9.14-r2
+  readline geoip libexecinfo tcl openrc libxml2
 
 RUN apk add --no-cache -U --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc
 
