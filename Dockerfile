@@ -2,11 +2,11 @@ FROM alpine:3.16.3 as builder
 
 RUN apk add --no-cache --virtual .tools \
   bzip2 curl git automake libtool autoconf make \
-  sed file perl openrc openssl
+  sed file perl openrc openssl=1.1.1t-r0
 
 # ATS
 RUN apk add --no-cache --virtual .ats-build-deps \
-  build-base openssl-dev tcl-dev pcre-dev zlib-dev \
+  build-base openssl-dev=1.1.1t-r0 tcl-dev pcre-dev zlib-dev \
   libexecinfo-dev linux-headers libunwind-dev \
   brotli-dev jansson-dev luajit-dev readline-dev \
   geoip-dev libxml2-dev
@@ -45,7 +45,7 @@ FROM alpine:3.16.3
 # essential library
 RUN apk add --no-cache -U \
   bash build-base curl ca-certificates pcre \
-  zlib openssl brotli jansson luajit libunwind \
+  zlib openssl=1.1.1t-r0 brotli jansson luajit libunwind \
   readline geoip libexecinfo tcl openrc libxml2
 
 RUN apk add --no-cache -U --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc
