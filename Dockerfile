@@ -1,7 +1,7 @@
 FROM alpine:3.16.5 as builder
 
 RUN apk add --no-cache --virtual .tools \
-  bzip2 curl git automake libtool autoconf make \
+  bzip2 curl=8.0.1-r0 git automake libtool autoconf make \
   sed file perl openrc openssl
 
 # ATS
@@ -44,7 +44,7 @@ FROM alpine:3.16.5
 
 # essential library
 RUN apk add --no-cache -U \
-  bash build-base curl ca-certificates pcre \
+  bash build-base curl=8.0.1-r0 ca-certificates pcre \
   zlib openssl brotli jansson luajit libunwind \
   readline geoip libexecinfo tcl openrc libxml2
 
