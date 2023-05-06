@@ -1,4 +1,10 @@
-FROM alpine:3.16.5 as builder
+FROM --platform=linux/amd64 alpine:3.16.5 as builder-amd64
+
+FROM --platform=linux/arm64 arm64v8/alpine:3.16.5 as builder-arm64
+
+ARG TARGETARCH
+
+FROM builder-${TARGETARCH} as builder
 
 RUN apk add --no-cache --virtual .tools \
   bzip2 curl=8.0.1-r0 git automake libtool autoconf make \
@@ -40,7 +46,11 @@ RUN chmod 755 entry.sh
 
 ENTRYPOINT ["/opt/ats/bin/entry.sh"]
 
-FROM alpine:3.16.5
+FROM --platform=linux/amd64 alpine:3.16.5 as worker-amd64
+
+FROM --platform=linux/arm64 arm64v8/alpine:3.16.5 as worker-arm64
+
+FROM worker-${TARGETARCH} as worker
 
 # essential library
 RUN apk add --no-cache -U \
