@@ -1,6 +1,6 @@
-FROM --platform=linux/amd64 alpine:3.16.5 as builder-amd64
+FROM --platform=linux/amd64 alpine:3.16.6 as builder-amd64
 
-FROM --platform=linux/arm64 arm64v8/alpine:3.16.5 as builder-arm64
+FROM --platform=linux/arm64 arm64v8/alpine:3.16.6 as builder-arm64
 
 ARG TARGETARCH
 
@@ -26,8 +26,8 @@ RUN adduser -S -D -H -u 1000 -h /tmp -s /sbin/nologin -G ats -g ats ats
 
 # download and build ATS
 # patch 2 files due to pthread in musl vs glibc - see https://github.com/apache/trafficserver/pull/7611/files
-RUN curl -L https://downloads.apache.org/trafficserver/trafficserver-9.2.0.tar.bz2 | bzip2 -dc | tar xf - \
-  && cd trafficserver-9.2.0/ \
+RUN curl -L https://downloads.apache.org/trafficserver/trafficserver-9.2.1.tar.bz2 | bzip2 -dc | tar xf - \
+  && cd trafficserver-9.2.1/ \
   && sed -i "s/PTHREAD_RWLOCK_WRITER_NONRECURSIVE_INITIALIZER_NP/PTHREAD_RWLOCK_INITIALIZER/" include/tscore/ink_rwlock.h \
   && sed -i "s/PTHREAD_RWLOCK_WRITER_NONRECURSIVE_INITIALIZER_NP/PTHREAD_RWLOCK_INITIALIZER/" include/tscpp/util/TsSharedMutex.h \
   && autoreconf -if \
@@ -46,9 +46,9 @@ RUN chmod 755 entry.sh
 
 ENTRYPOINT ["/opt/ats/bin/entry.sh"]
 
-FROM --platform=linux/amd64 alpine:3.16.5 as worker-amd64
+FROM --platform=linux/amd64 alpine:3.16.6 as worker-amd64
 
-FROM --platform=linux/arm64 arm64v8/alpine:3.16.5 as worker-arm64
+FROM --platform=linux/arm64 arm64v8/alpine:3.16.6 as worker-arm64
 
 FROM worker-${TARGETARCH} as worker
 
