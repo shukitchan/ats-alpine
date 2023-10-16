@@ -7,7 +7,7 @@ ARG TARGETARCH
 FROM builder-${TARGETARCH} as builder
 
 RUN apk add --no-cache --virtual .tools \
-  bzip2 curl git automake libtool autoconf make \
+  bzip2 curl=8.3.0-r0 git automake libtool autoconf make \
   sed file perl openrc openssl
 
 # ATS
@@ -26,8 +26,8 @@ RUN adduser -S -D -H -u 1000 -h /tmp -s /sbin/nologin -G ats -g ats ats
 
 # download and build ATS
 # patch 2 files due to pthread in musl vs glibc - see https://github.com/apache/trafficserver/pull/7611/files
-RUN curl -L https://downloads.apache.org/trafficserver/trafficserver-9.2.2.tar.bz2 | bzip2 -dc | tar xf - \
-  && cd trafficserver-9.2.2/ \
+RUN curl -L https://downloads.apache.org/trafficserver/trafficserver-9.2.3.tar.bz2 | bzip2 -dc | tar xf - \
+  && cd trafficserver-9.2.3/ \
   && sed -i "s/PTHREAD_RWLOCK_WRITER_NONRECURSIVE_INITIALIZER_NP/PTHREAD_RWLOCK_INITIALIZER/" include/tscore/ink_rwlock.h \
   && sed -i "s/PTHREAD_RWLOCK_WRITER_NONRECURSIVE_INITIALIZER_NP/PTHREAD_RWLOCK_INITIALIZER/" include/tscpp/util/TsSharedMutex.h \
   && autoreconf -if \
@@ -54,7 +54,7 @@ FROM worker-${TARGETARCH} as worker
 
 # essential library
 RUN apk add --no-cache -U \
-  bash build-base curl ca-certificates pcre \
+  bash build-base curl=8.3.0-r0 ca-certificates pcre \
   zlib openssl brotli jansson luajit libunwind \
   readline geoip libexecinfo tcl openrc libxml2
 
