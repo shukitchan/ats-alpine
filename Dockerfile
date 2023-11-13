@@ -7,7 +7,7 @@ ARG TARGETARCH
 FROM builder-${TARGETARCH} as builder
 
 RUN apk add --no-cache --virtual .tools \
-  bzip2 curl=8.4.0-r0 git automake libtool autoconf make \
+  bzip2 curl=8.4.0-r0 nghttp2-libs=1.47.0-r2 git automake libtool autoconf make \
   sed file perl openrc openssl
 
 # ATS
@@ -54,7 +54,7 @@ FROM worker-${TARGETARCH} as worker
 
 # essential library
 RUN apk add --no-cache -U \
-  bash build-base curl=8.4.0-r0 ca-certificates pcre \
+  bash build-base curl=8.4.0-r0 nghttp2-libs=1.47.0-r2 ca-certificates pcre \
   zlib openssl brotli jansson luajit libunwind \
   readline geoip libexecinfo tcl openrc libxml2
 
