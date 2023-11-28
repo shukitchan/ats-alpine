@@ -8,11 +8,11 @@ FROM builder-${TARGETARCH} as builder
 
 RUN apk add --no-cache --virtual .tools \
   bzip2 curl=8.4.0-r0 nghttp2-libs=1.47.0-r2 git automake libtool autoconf make \
-  sed file perl openrc openssl
+  sed file perl openrc openssl=1.1.1w-r1
 
 # ATS
 RUN apk add --no-cache --virtual .ats-build-deps \
-  build-base openssl-dev tcl-dev pcre-dev zlib-dev \
+  build-base openssl-dev=1.1.1w-r1 tcl-dev pcre-dev zlib-dev \
   libexecinfo-dev linux-headers libunwind-dev \
   brotli-dev jansson-dev luajit-dev readline-dev \
   geoip-dev libxml2-dev
@@ -55,7 +55,7 @@ FROM worker-${TARGETARCH} as worker
 # essential library
 RUN apk add --no-cache -U \
   bash build-base curl=8.4.0-r0 nghttp2-libs=1.47.0-r2 ca-certificates pcre \
-  zlib openssl brotli jansson luajit libunwind \
+  zlib openssl=1.1.1w-r1 brotli jansson luajit libunwind \
   readline geoip libexecinfo tcl openrc libxml2
 
 RUN apk add --no-cache -U --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc
