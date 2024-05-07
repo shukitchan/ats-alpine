@@ -12,7 +12,7 @@ RUN apk add --no-cache --virtual .tools \
 
 # ATS
 RUN apk add --no-cache --virtual .ats-build-deps \
-  base build-base openssl-dev=1.1.1w-r1 tcl-dev pcre-dev zlib-dev \
+  bash build-base openssl-dev=1.1.1w-r1 tcl-dev pcre-dev zlib-dev \
   libexecinfo-dev linux-headers libunwind-dev \
   brotli-dev jansson-dev luajit-dev readline-dev \
   geoip-dev libxml2-dev
