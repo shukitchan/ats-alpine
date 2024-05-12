@@ -1,23 +1,25 @@
-FROM --platform=linux/amd64 alpine:3.16.9 as builder-amd64
+FROM --platform=linux/amd64 alpine:3.19.1 as builder-amd64
 
-FROM --platform=linux/arm64 arm64v8/alpine:3.16.9 as builder-arm64
+FROM --platform=linux/arm64 arm64v8/alpine:3.19.1 as builder-arm64
 
 ARG TARGETARCH
 
 FROM builder-${TARGETARCH} as builder
 
 RUN apk add --no-cache --virtual .tools \
-  bzip2 curl nghttp2-libs=1.47.0-r2 git automake libtool autoconf make \
-  sed file perl openrc openssl=1.1.1w-r1
+  bzip2 curl nghttp2-libs git automake libtool autoconf make \
+  sed file perl openrc openssl
 
 # ATS
 RUN apk add --no-cache --virtual .ats-build-deps \
-  bash build-base openssl-dev=1.1.1w-r1 tcl-dev pcre-dev zlib-dev \
-  libexecinfo-dev linux-headers libunwind-dev \
+  bash build-base openssl-dev tcl-dev pcre-dev zlib-dev \
+  linux-headers libunwind-dev \
   brotli-dev jansson-dev luajit-dev readline-dev \
   geoip-dev libxml2-dev
 
 RUN apk add --no-cache --virtual .ats-extra-build-deps --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc-dev
+
+RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.16/main libexecinfo-dev
 
 # create ats user/group
 RUN addgroup -Sg 1000 ats
@@ -46,19 +48,21 @@ RUN chmod 755 entry.sh
 
 ENTRYPOINT ["/opt/ats/bin/entry.sh"]
 
-FROM --platform=linux/amd64 alpine:3.16.9 as worker-amd64
+FROM --platform=linux/amd64 alpine:3.19.1 as worker-amd64
 
-FROM --platform=linux/arm64 arm64v8/alpine:3.16.9 as worker-arm64
+FROM --platform=linux/arm64 arm64v8/alpine:3.19.1 as worker-arm64
 
 FROM worker-${TARGETARCH} as worker
 
 # essential library
 RUN apk add --no-cache -U \
-  bash build-base curl nghttp2-libs=1.47.0-r2 ca-certificates pcre \
-  zlib openssl=1.1.1w-r1 brotli jansson luajit libunwind \
-  readline geoip libexecinfo tcl openrc libxml2
+  bash build-base curl nghttp2-libs ca-certificates pcre \
+  zlib openssl brotli jansson luajit libunwind \
+  readline geoip tcl openrc libxml2
 
 RUN apk add --no-cache -U --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc
+
+RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.16/main libexecinfo
 
 # create ats user/group
 RUN addgroup -Sg 1000 ats
