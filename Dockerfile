@@ -14,12 +14,14 @@ RUN apk add --no-cache --virtual .tools \
 RUN apk add --no-cache --virtual .ats-build-deps \
   bash build-base openssl-dev tcl-dev pcre-dev zlib-dev \
   linux-headers libunwind-dev \
-  brotli-dev jansson-dev luajit-dev readline-dev \
+  brotli-dev jansson-dev readline-dev \
   geoip-dev libxml2-dev
 
 RUN apk add --no-cache --virtual .ats-extra-build-deps --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc-dev
 
 RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.16/main libexecinfo-dev
+
+RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.19/main luajit-dev=2.1_p20230410-r3
 
 # create ats user/group
 RUN addgroup -Sg 1000 ats
@@ -57,12 +59,14 @@ FROM worker-${TARGETARCH} as worker
 # essential library
 RUN apk add --no-cache -U \
   bash build-base curl nghttp2-libs ca-certificates pcre \
-  zlib openssl brotli jansson luajit libunwind \
+  zlib openssl brotli jansson libunwind \
   readline geoip tcl openrc libxml2
 
 RUN apk add --no-cache -U --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc
 
 RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.16/main libexecinfo
+
+RUN apk add --repository=https://dl-cdn.alpinelinux.org/alpine/v3.19/main luajit=2.1_p20230410-r3
 
 # create ats user/group
 RUN addgroup -Sg 1000 ats
