@@ -1,6 +1,6 @@
-FROM --platform=linux/amd64 alpine:3.20.2 as builder-amd64
+FROM --platform=linux/amd64 alpine:3.20.3 as builder-amd64
 
-FROM --platform=linux/arm64 arm64v8/alpine:3.20.2 as builder-arm64
+FROM --platform=linux/arm64 arm64v8/alpine:3.20.3 as builder-arm64
 
 ARG TARGETARCH
 
@@ -50,9 +50,9 @@ RUN chmod 755 entry.sh
 
 ENTRYPOINT ["/opt/ats/bin/entry.sh"]
 
-FROM --platform=linux/amd64 alpine:3.20.2 as worker-amd64
+FROM --platform=linux/amd64 alpine:3.20.3 as worker-amd64
 
-FROM --platform=linux/arm64 arm64v8/alpine:3.20.2 as worker-arm64
+FROM --platform=linux/arm64 arm64v8/alpine:3.20.3 as worker-arm64
 
 FROM worker-${TARGETARCH} as worker
 
