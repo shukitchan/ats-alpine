@@ -15,7 +15,7 @@ RUN apk add --no-cache --virtual .ats-build-deps \
   bash build-base openssl-dev tcl-dev pcre-dev zlib-dev \
   linux-headers libunwind-dev \
   brotli-dev jansson-dev readline-dev \
-  geoip-dev libxml2-dev
+  geoip-dev libxml2-dev curl-dev
 
 RUN apk add --no-cache --virtual .ats-extra-build-deps --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc-dev
 
