@@ -8,11 +8,11 @@ FROM builder-${TARGETARCH} as builder
 
 RUN apk add --no-cache --virtual .tools \
   bzip2 curl nghttp2-libs git automake libtool autoconf make \
-  sed file perl openrc openssl
+  sed file perl openrc openssl=3.3.5-r0
 
 # ATS
 RUN apk add --no-cache --virtual .ats-build-deps \
-  bash build-base openssl-dev tcl-dev pcre-dev zlib-dev \
+  bash build-base openssl-dev=3.3.5-r0 tcl-dev pcre-dev zlib-dev \
   linux-headers libunwind-dev \
   brotli-dev jansson-dev readline-dev \
   geoip-dev libxml2-dev curl-dev
@@ -21,7 +21,7 @@ RUN apk add --no-cache --virtual .ats-extra-build-deps --repository https://dl-c
 
 RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.16/main libexecinfo-dev
 
-RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.19/main luajit-dev=2.1_p20230410-r3
+RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.19/main luajit-dev=2.1_p20240815-r1
 
 # create ats user/group
 RUN addgroup -Sg 1000 ats
@@ -59,14 +59,14 @@ FROM worker-${TARGETARCH} as worker
 # essential library
 RUN apk add --no-cache -U \
   bash build-base curl nghttp2-libs ca-certificates pcre \
-  zlib openssl brotli jansson libunwind \
+  zlib openssl=3.3.5-r0 brotli jansson libunwind \
   readline geoip tcl openrc libxml2
 
 RUN apk add --no-cache -U --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc
 
 RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.16/main libexecinfo
 
-RUN apk add --repository=https://dl-cdn.alpinelinux.org/alpine/v3.19/main luajit=2.1_p20230410-r3
+RUN apk add --repository=https://dl-cdn.alpinelinux.org/alpine/v3.19/main luajit=2.1_p20240815-r1
 
 # create ats user/group
 RUN addgroup -Sg 1000 ats
