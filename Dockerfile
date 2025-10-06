@@ -21,7 +21,7 @@ RUN apk add --no-cache --virtual .ats-extra-build-deps --repository https://dl-c
 
 RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.16/main libexecinfo-dev
 
-RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.19/main luajit-dev=2.1_p20240815-r1
+RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main luajit-dev=2.1_p20240815-r1
 
 # create ats user/group
 RUN addgroup -Sg 1000 ats
@@ -66,7 +66,7 @@ RUN apk add --no-cache -U --repository https://dl-cdn.alpinelinux.org/alpine/edg
 
 RUN apk add --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/v3.16/main libexecinfo
 
-RUN apk add --repository=https://dl-cdn.alpinelinux.org/alpine/v3.19/main luajit=2.1_p20240815-r1
+RUN apk add --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main luajit=2.1_p20240815-r1
 
 # create ats user/group
 RUN addgroup -Sg 1000 ats
