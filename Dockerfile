@@ -1,6 +1,6 @@
-FROM --platform=linux/amd64 alpine:3.20.7 as builder-amd64
+FROM --platform=linux/amd64 alpine:3.20.8 as builder-amd64
 
-FROM --platform=linux/arm64 arm64v8/alpine:3.20.7 as builder-arm64
+FROM --platform=linux/arm64 arm64v8/alpine:3.20.8 as builder-arm64
 
 ARG TARGETARCH
 
@@ -8,11 +8,11 @@ FROM builder-${TARGETARCH} as builder
 
 RUN apk add --no-cache --virtual .tools \
   bzip2 curl nghttp2-libs git automake libtool autoconf make \
-  sed file perl openrc openssl=3.3.5-r0
+  sed file perl openrc openssl
 
 # ATS
 RUN apk add --no-cache --virtual .ats-build-deps \
-  bash build-base openssl-dev=3.3.5-r0 tcl-dev pcre-dev zlib-dev \
+  bash build-base openssl-dev tcl-dev pcre-dev zlib-dev \
   linux-headers libunwind-dev \
   brotli-dev jansson-dev readline-dev \
   geoip-dev libxml2-dev curl-dev
@@ -50,16 +50,16 @@ RUN chmod 755 entry.sh
 
 ENTRYPOINT ["/opt/ats/bin/entry.sh"]
 
-FROM --platform=linux/amd64 alpine:3.20.7 as worker-amd64
+FROM --platform=linux/amd64 alpine:3.20.8 as worker-amd64
 
-FROM --platform=linux/arm64 arm64v8/alpine:3.20.7 as worker-arm64
+FROM --platform=linux/arm64 arm64v8/alpine:3.20.8 as worker-arm64
 
 FROM worker-${TARGETARCH} as worker
 
 # essential library
 RUN apk add --no-cache -U \
   bash build-base curl nghttp2-libs ca-certificates pcre \
-  zlib openssl=3.3.5-r0 brotli jansson libunwind \
+  zlib openssl brotli jansson libunwind \
   readline geoip tcl openrc libxml2
 
 RUN apk add --no-cache -U --repository https://dl-cdn.alpinelinux.org/alpine/edge/community hwloc
